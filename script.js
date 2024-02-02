@@ -49,11 +49,12 @@ const getWeatherDetails = async (cityName, latitude, longitude) => {
 
         const res = await  fetch(WEATHER_API_URL);
         const data = await res.json();
-        const uniqueForecastDays = [];
+        const uniqueForecastDays = new Set();
         const fiveDaysForecast = data.list.filter(forecast => {
             const forecastDate = new Date(forecast.dt_txt).getDate();
-            if (!uniqueForecastDays.includes(forecastDate)) {
-                return uniqueForecastDays.push(forecastDate);
+            // console.log(new Date(forecast.dt_txt).getDate());
+            if (!uniqueForecastDays.has(forecastDate)) {
+                return uniqueForecastDays.add(forecastDate);
             }
         });
         // Clearing previous weather data
@@ -122,6 +123,11 @@ const getUserCoordinates = async  () => {
             }
         });
 }
+function getDayAbbreviation(date){
+  const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const dayIndex = date.getDay(); // 0 for Sunday, 1 for Monday, ..., 6 for Saturday
+  return daysOfWeek[dayIndex];
+}
 
 locationButton.addEventListener("click", getUserCoordinates);
 searchButton.addEventListener("click", getCityCoordinates);
@@ -153,7 +159,7 @@ setTimeout(()=>{
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(map);
     
-}, 999);
+}, 888);
 
 const onMapClick = async (evt) => {
     //console.log(evt.latlng.lat, evt.latlng.lng, evt);
@@ -177,11 +183,6 @@ const onMapClick = async (evt) => {
     }
 }
 
-function getDayAbbreviation(date){
-  const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  const dayIndex = date.getDay(); // 0 for Sunday, 1 for Monday, ..., 6 for Saturday
-  return daysOfWeek[dayIndex];
-}
 
 
 
