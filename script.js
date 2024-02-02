@@ -31,9 +31,10 @@ const createWeatherCard = (cityName, weatherItem, index) => {
                     <h6>${weatherItem.weather[0].description}</h6>
                 </div>`;
     } else { 
+        // console.log(getDayAbbreviation(new Date(weatherItem.dt_txt.split(" ")[0])));
         // HTML for the other five day forecast card
         return `<li class="card !text-emerald-900">
-                    
+                   <h3>${getDayAbbreviation(new Date(weatherItem.dt_txt.split(" ")[0]))}</h3> 
                     <img src="https://openweathermap.org/img/wn/${weatherItem.weather[0].icon}@4x.png" alt="weather-icon">
                     <h6>Temp: ${(weatherItem.main.temp - 273.15).toFixed(2)}°C</h6>
                     <h6>Wind: ${weatherItem.wind.speed} M/S</h6>
@@ -176,6 +177,11 @@ const onMapClick = async (evt) => {
     }
 }
 
+function getDayAbbreviation(date){
+  const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const dayIndex = date.getDay(); // 0 for Sunday, 1 for Monday, ..., 6 for Saturday
+  return daysOfWeek[dayIndex];
+}
 
 
 
