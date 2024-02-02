@@ -5,11 +5,15 @@ const searchButton = document.querySelector(".search-btn");
 const locationButton = document.querySelector(".location-btn");
 const currentWeatherDiv = document.querySelector(".current-weather");
 const weatherCardsDiv = document.querySelector(".weather-cards");
-
-
 const API_KEY = config.API_KEY; 
+const content = $('.container');
+const loader = $('.loader');
+let map = null;
 let city_name = '';
 let city_temp = 0;
+let long = '';
+let lat = '';
+var popup = L.popup();
 
 // HTML for the main weather card
 const createWeatherCard = (cityName, weatherItem, index) => {
@@ -37,13 +41,13 @@ const createWeatherCard = (cityName, weatherItem, index) => {
                 </li>`;
     }
 }
-
-const getWeatherDetails = (cityName, latitude, longitude) => {
+const getWeatherDetails = async (cityName, latitude, longitude) => {
     const WEATHER_API_URL = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`;
 
-    fetch(WEATHER_API_URL).then(response => response.json()).then(data => {
-        // console.log(data);
-        // Filter the forecasts to get only one forecast per day
+    try{
+
+        const res = await  fetch(WEATHER_API_URL);
+        const data = await res.json();
         const uniqueForecastDays = [];
         const fiveDaysForecast = data.list.filter(forecast => {
             const forecastDate = new Date(forecast.dt_txt).getDate();
@@ -51,12 +55,10 @@ const getWeatherDetails = (cityName, latitude, longitude) => {
                 return uniqueForecastDays.push(forecastDate);
             }
         });
-
         // Clearing previous weather data
         cityInput.value = "";
         currentWeatherDiv.innerHTML = "";
         weatherCardsDiv.innerHTML = "";
-
         // Creating weather cards and adding them to the DOM
         fiveDaysForecast.forEach((weatherItem, index) => {
             const html = createWeatherCard(cityName, weatherItem, index);
@@ -66,11 +68,11 @@ const getWeatherDetails = (cityName, latitude, longitude) => {
                 weatherCardsDiv.insertAdjacentHTML("beforeend", html);
             }
         });        
-    }).catch(() => {
-        alert("An error occurred while fetching the weather forecast!");
-    });
 }
-
+catch{
+    console.error("BAD REQUEST: 400");
+}
+}
 const getCityCoordinates = async () => {
     const cityName = cityInput.value.trim();
     if (cityName === "") return alert('INPUT FIELD IS EMPTY!');
@@ -88,13 +90,7 @@ const getCityCoordinates = async () => {
             alert("An error occurred while fetching the coordinates!");
     }
 }
-
-
-
-let long = '';
-let lat = '';
-
-const getUserCoordinates =  () => {
+const getUserCoordinates = async  () => {
 
     navigator.geolocation.getCurrentPosition(
         async position => {
@@ -130,16 +126,9 @@ locationButton.addEventListener("click", getUserCoordinates);
 searchButton.addEventListener("click", getCityCoordinates);
 cityInput.addEventListener("keyup", e => e.key === "Enter" && getCityCoordinates());
 
-const content = $('.container');
-const loader = $('.loader');
-
-
 content.hide();
 loader.show();
 getUserCoordinates();
-
-
-let map = null;
 
 setTimeout(()=>{
  
@@ -164,22 +153,31 @@ setTimeout(()=>{
         }).addTo(map);
     
 }, 999);
-var popup = L.popup();
 
 const onMapClick = async (evt) => {
     //console.log(evt.latlng.lat, evt.latlng.lng, evt);
     const WEATHER_API_URL = `https://api.openweathermap.org/data/2.5/forecast?lat=${evt.latlng.lat}&lon=${evt.latlng.lng}&appid=${API_KEY}`
     const API_URL = `https://api.openweathermap.org/geo/1.0/reverse?lat=${evt.latlng.lat}&lon=${evt.latlng.lng}&limit=1&appid=${API_KEY}`;
-    const data = await fetch(API_URL);
-    const data2 = await fetch(WEATHER_API_URL);
+    try{
 
-    const contentData2 = await data2.json();
-    const contentData = await data.json();
-    const temp_C =  (contentData2.list[0].main.temp - 273.15).toFixed(2);
-    popup
+        const data = await fetch(API_URL);
+        const data2 = await fetch(WEATHER_API_URL);
+        
+        const contentData2 = await data2.json();
+        const contentData = await data.json();
+        const temp_C =  (contentData2.list[0].main.temp - 273.15).toFixed(2);
+        popup
         .setLatLng(evt.latlng)
         .setContent(`${contentData[0].name},  \n ${temp_C}°C `.toUpperCase())
         .openOn(map);
+    }
+    catch{
+        console.error("BAD REQUEST: 400");
+    }
 }
+
+
+
+
 
 
