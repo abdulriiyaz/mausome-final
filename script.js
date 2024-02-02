@@ -154,7 +154,9 @@ setTimeout(()=>{
         fillOpacity: 0.5,
         radius: 500
         }).addTo(map);
-        circle.bindPopup(`You're in ${city_name}, Temp: ${city_temp}°C`).openPopup();
+        window.localStorage.setItem("Location", city_name);
+        window.localStorage.setItem("Temp", city_temp);
+        circle.bindPopup(`You're in ${window.localStorage.getItem("Location")}, Temp: ${window.localStorage.getItem("Temp")}°C`).openPopup();
         map.on('click', onMapClick);
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
