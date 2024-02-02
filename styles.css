@@ -110,20 +110,21 @@ background: rgb(5 150 105);
   gap: 20px;
 }
 .weather-cards .card {
-  color: #fff;
-  padding: 18px 16px;
+  padding: 20px 20px;
   list-style: none;
   width: calc(100% / 5);
   background: #A7A7A7;
   border-radius: 5px;
+  text-align: center;
 }
 .weather-cards .card h3 {
+  text-align: center;
   font-size: 1.3rem;
   font-weight: 600;
 }
 .weather-cards .card img {
   max-width: 70px;
-  margin: 5px 0 -12px 0;
+  margin: 5px auto ;
 }
  
 @media (max-width: 1400px) {
