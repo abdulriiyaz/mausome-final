@@ -93,7 +93,7 @@ const getCityCoordinates = async () => {
     }
 }
 const getUserCoordinates = async  () => {
-
+windows
     navigator.geolocation.getCurrentPosition(
         async position => {
             const { latitude, longitude } = position.coords; 
@@ -182,9 +182,3 @@ const onMapClick = async (evt) => {
         console.error("BAD REQUEST: 400");
     }
 }
-
-
-
-
-
-
