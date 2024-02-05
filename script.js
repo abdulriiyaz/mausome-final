@@ -6,8 +6,8 @@ const locationButton = document.querySelector(".location-btn");
 const currentWeatherDiv = document.querySelector(".current-weather");
 const weatherCardsDiv = document.querySelector(".weather-cards");
 const API_KEY = config.API_KEY; 
-const content = $('.container');
-const loader = $('.loader');
+const content = $('#container');
+const loader = $('#loader');
 let map = null;
 let city_name = '';
 let city_temp = 0;
@@ -44,7 +44,7 @@ const createWeatherCard = (cityName, weatherItem, index) => {
 }
 const getWeatherDetails = async (cityName, latitude, longitude) => {
     const WEATHER_API_URL = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`;
-
+    // content.addClass('!hidden');
     try{
 
         const res = await  fetch(WEATHER_API_URL);
@@ -69,7 +69,9 @@ const getWeatherDetails = async (cityName, latitude, longitude) => {
             } else {
                 weatherCardsDiv.insertAdjacentHTML("beforeend", html);
             }
-        });        
+        }); 
+        // content.removeClass('!hidden');
+        // loader.addClass('!hidden');       
 }
 catch{
     console.error("BAD REQUEST: 400");
@@ -93,7 +95,11 @@ const getCityCoordinates = async () => {
     }
 }
 const getUserCoordinates = async  () => {
-windows
+    // content.addClass('!hidden');
+    // content.addClass('!hidden');
+    // loader.show();
+    // loader.removeClass('!hidden');
+window
     navigator.geolocation.getCurrentPosition(
         async position => {
             const { latitude, longitude } = position.coords; 
@@ -113,6 +119,7 @@ windows
             catch{
                 alert("An error occurred while fetching the city name!");
             }
+            
         },
         error => { 
             // Show alert if user denied the location permission
@@ -122,6 +129,9 @@ windows
                 alert("Geolocation request error. Please reset location permission.");
             }
         });
+        // content.removeClass('!hidden');
+        // loader.addClass('!hidden');
+        
 }
 function getDayAbbreviation(date){
   const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -133,16 +143,15 @@ locationButton.addEventListener("click", getUserCoordinates);
 searchButton.addEventListener("click", getCityCoordinates);
 
 
-content.hide();
-loader.show();
-getUserCoordinates();
+// content.addClass('!hidden');
+// loader.addClass('!hidden');
+content.addClass('!hidden');
 
+await getUserCoordinates();
 setTimeout(()=>{
- 
-    loader.hide();
-    content.show();
-
     //Map 
+    content.removeClass('!hidden');
+    loader.addClass('!hidden');
     map = L.map('map').setView([lat, long], 13);
         var circle = L.circle([lat, long], {
         color: 'red',
@@ -159,7 +168,7 @@ setTimeout(()=>{
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(map);
     
-}, 888);
+}, 4000);
 
 const onMapClick = async (evt) => {
     //console.log(evt.latlng.lat, evt.latlng.lng, evt);
@@ -182,3 +191,5 @@ const onMapClick = async (evt) => {
         console.error("BAD REQUEST: 400");
     }
 }
+
+//Create fizz buzz
