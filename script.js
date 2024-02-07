@@ -14,6 +14,7 @@ let city_temp = 0;
 let long = '';
 let lat = '';
 var popup = L.popup();
+let temp;
 
 // HTML for the main weather card
 const createWeatherCard = (cityName, weatherItem, index) => {
@@ -49,6 +50,9 @@ const getWeatherDetails = async (cityName, latitude, longitude) => {
 
         const res = await  fetch(WEATHER_API_URL);
         const data = await res.json();
+        // console.log(data);
+        temp = (data.list[0].main.temp - 273.15).toFixed(2);
+        window.localStorage.setItem("TEMP", temp);
         const uniqueForecastDays = new Set();
         const fiveDaysForecast = data.list.filter(forecast => {
             const forecastDate = new Date(forecast.dt_txt).getDate();
@@ -95,6 +99,7 @@ const getCityCoordinates = async () => {
     }
 }
 const getUserCoordinates = async  () => {
+    // console.log(temp);
     // content.addClass('!hidden');
     // content.addClass('!hidden');
     // loader.show();
@@ -149,7 +154,7 @@ content.addClass('!hidden');
 
 await getUserCoordinates();
 setTimeout(()=>{
-    //Map 
+    //Map
     content.removeClass('!hidden');
     loader.addClass('!hidden');
     map = L.map('map').setView([lat, long], 13);
