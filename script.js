@@ -154,10 +154,10 @@ setTimeout(()=>{
     loader.addClass('!hidden');
     map = L.map('map').setView([lat, long], 13);
         var circle = L.circle([lat, long], {
-        color: 'red',
-        fillColor: '#f03',
-        fillOpacity: 0.5,
-        radius: 500
+        color: '#064E3B',
+        fillColor: '#064E3B',
+        fillOpacity: 0.9,
+        radius: 900
         }).addTo(map);
         window.localStorage.setItem("Location", city_name);
         window.localStorage.setItem("Temp", city_temp);

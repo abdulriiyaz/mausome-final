@@ -170,3 +170,13 @@ background: rgb(5 150 105);
 } 
 
 #map { height: 400px; }
+
+.leaflet-popup-content{
+  color: white;
+  font-weight: bold;
+
+}
+
+.leaflet-popup-content-wrapper{
+  background-color: #064e3b !important;
+}
