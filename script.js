@@ -1,5 +1,6 @@
 import config from './config.js';
 
+
 const cityInput = document.querySelector(".city-input");
 const searchButton = document.querySelector(".search-btn");
 const locationButton = document.querySelector(".location-btn");
@@ -15,6 +16,8 @@ let long = '';
 let lat = '';
 var popup = L.popup();
 let temp;
+let darkMode = false;
+const themeSwitcher = $('#switch');
 
 // HTML for the main weather card
 const createWeatherCard = (cityName, weatherItem, index) => {
@@ -146,6 +149,22 @@ function getDayAbbreviation(date){
 
 locationButton.addEventListener("click", getUserCoordinates);
 searchButton.addEventListener("click", getCityCoordinates);
+themeSwitcher.on('click', ()=>{
+    if(darkMode){
+        document.querySelector('#switch').innerHTML = 'DARK MODE';
+        $('body').removeClass('dark');
+        themeSwitcher.removeClass('dark-secondary');
+        currentWeatherDiv.classList.remove('dark-secondary');
+        darkMode = false;
+    }else{
+        document.querySelector('#switch').innerHTML = 'LIGHT MODE';
+        themeSwitcher.addClass('dark-secondary');
+        currentWeatherDiv.classList.add('dark-secondary');
+        $('body').addClass('dark');
+        $('input').addClass('!text-black');
+        darkMode = true;
+    }
+});
 
 
 // content.addClass('!hidden');

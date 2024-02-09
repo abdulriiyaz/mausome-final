@@ -190,3 +190,13 @@ background: rgb(5 150 105);
   /* background-color: white; */
   font-weight: bold;
 }
+
+
+.dark-secondary{
+  background-color: #a9a9a9 !important;
+  color: black !important;
+}
+.dark{
+  background-color: #1e1e1e !important;
+  color: white !important;
+}
