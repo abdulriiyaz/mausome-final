@@ -147,24 +147,26 @@ function getDayAbbreviation(date){
   return daysOfWeek[dayIndex];
 }
 
+function switchTheme(){
+        if (darkMode) {
+            document.querySelector('#switch').innerHTML = 'DARK MODE';
+            $('body').removeClass('dark');
+            themeSwitcher.removeClass('dark-secondary');
+            currentWeatherDiv.classList.remove('dark-secondary');
+            darkMode = false;
+        } else {
+            document.querySelector('#switch').innerHTML = 'LIGHT MODE';
+            themeSwitcher.addClass('dark-secondary');
+            currentWeatherDiv.classList.add('dark-secondary');
+            $('body').addClass('dark');
+            $('input').addClass('!text-black');
+            darkMode = true;
+        }
+}
+
 locationButton.addEventListener("click", getUserCoordinates);
 searchButton.addEventListener("click", getCityCoordinates);
-themeSwitcher.on('click', ()=>{
-    if(darkMode){
-        document.querySelector('#switch').innerHTML = 'DARK MODE';
-        $('body').removeClass('dark');
-        themeSwitcher.removeClass('dark-secondary');
-        currentWeatherDiv.classList.remove('dark-secondary');
-        darkMode = false;
-    }else{
-        document.querySelector('#switch').innerHTML = 'LIGHT MODE';
-        themeSwitcher.addClass('dark-secondary');
-        currentWeatherDiv.classList.add('dark-secondary');
-        $('body').addClass('dark');
-        $('input').addClass('!text-black');
-        darkMode = true;
-    }
-});
+themeSwitcher.on('click', switchTheme);
 
 
 // content.addClass('!hidden');
@@ -193,7 +195,6 @@ setTimeout(()=>{
         }).addTo(map);
     
 }, 4000);
-
 const onMapClick = async (evt) => {
     //console.log(evt.latlng.lat, evt.latlng.lng, evt);
     const WEATHER_API_URL = `https://api.openweathermap.org/data/2.5/forecast?lat=${evt.latlng.lat}&lon=${evt.latlng.lng}&appid=${API_KEY}`
@@ -215,5 +216,3 @@ const onMapClick = async (evt) => {
         console.error("BAD REQUEST: 400");
     }
 }
-
-//Create fizz buzz
