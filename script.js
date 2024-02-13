@@ -1,6 +1,5 @@
 import config from './config.js';
 
-
 const cityInput = document.querySelector(".city-input");
 const searchButton = document.querySelector(".search-btn");
 const locationButton = document.querySelector(".location-btn");
@@ -9,15 +8,22 @@ const weatherCardsDiv = document.querySelector(".weather-cards");
 const API_KEY = config.API_KEY; 
 const content = $('#container');
 const loader = $('#loader');
-let map = null;
+// let map = null;
 let city_name = '';
 let city_temp = 0;
 let long = '';
 let lat = '';
-var popup = L.popup();
+// var popup = L.popup();
 let temp;
 let darkMode = false;
 const themeSwitcher = $('#switch');
+
+const mapObj = document.querySelector('#map');
+
+
+
+
+
 
 // HTML for the main weather card
 const createWeatherCard = (cityName, weatherItem, index) => {
@@ -148,18 +154,26 @@ function getDayAbbreviation(date){
 }
 
 function switchTheme(){
+
+    
         if (darkMode) {
             document.querySelector('#switch').innerHTML = 'DARK MODE';
             $('body').removeClass('dark');
             themeSwitcher.removeClass('dark-secondary');
             currentWeatherDiv.classList.remove('dark-secondary');
+            searchButton.classList.remove('search-color');
+            // $('separator').addClass('dark-secondary');
             darkMode = false;
         } else {
+            
+            document.querySelector('button.search-btn').classList.add('search-color');
             document.querySelector('#switch').innerHTML = 'LIGHT MODE';
             themeSwitcher.addClass('dark-secondary');
             currentWeatherDiv.classList.add('dark-secondary');
             $('body').addClass('dark');
             $('input').addClass('!text-black');
+            searchButton.classList.remove('dark-secondary');
+            // $('separator').removeClass('dark-secondary');
             darkMode = true;
         }
 }
@@ -178,41 +192,43 @@ setTimeout(()=>{
     //Map
     content.removeClass('!hidden');
     loader.addClass('!hidden');
-    map = L.map('map').setView([lat, long], 13);
-        var circle = L.circle([lat, long], {
-        color: '#064E3B',
-        fillColor: '#064E3B',
-        fillOpacity: 0.9,
-        radius: 900
-        }).addTo(map);
-        window.localStorage.setItem("Location", city_name);
-        window.localStorage.setItem("Temp", city_temp);
-        circle.bindPopup(`You're in ${window.localStorage.getItem("Location")}, Temp: ${window.localStorage.getItem("Temp")}°C`).openPopup();
-        map.on('click', onMapClick);
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        }).addTo(map);
-    
-}, 4000);
-const onMapClick = async (evt) => {
-    //console.log(evt.latlng.lat, evt.latlng.lng, evt);
-    const WEATHER_API_URL = `https://api.openweathermap.org/data/2.5/forecast?lat=${evt.latlng.lat}&lon=${evt.latlng.lng}&appid=${API_KEY}`
-    const API_URL = `https://api.openweathermap.org/geo/1.0/reverse?lat=${evt.latlng.lat}&lon=${evt.latlng.lng}&limit=1&appid=${API_KEY}`;
-    try{
+    // WORK FROM HERE
 
-        const data = await fetch(API_URL);
-        const data2 = await fetch(WEATHER_API_URL);
+    // map = L.map('map').setView([lat, long], 13);
+    //     var circle = L.circle([lat, long], {
+    //     color: '#064E3B',
+    //     fillColor: '#064E3B',
+    //     fillOpacity: 0.9,
+    //     radius: 900
+    //     }).addTo(map);
+    //     window.localStorage.setItem("Location", city_name);
+    //     window.localStorage.setItem("Temp", city_temp);
+    //     circle.bindPopup(`You're in ${window.localStorage.getItem("Location")}, Temp: ${window.localStorage.getItem("Temp")}°C`).openPopup();
+    //     map.on('click', onMapClick);
+    //     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    //     maxZoom: 19,
+    //     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    //     }).addTo(map);
+    
+}, 1000);
+// const onMapClick = async (evt) => {
+//     //console.log(evt.latlng.lat, evt.latlng.lng, evt);
+//     const WEATHER_API_URL = `https://api.openweathermap.org/data/2.5/forecast?lat=${evt.latlng.lat}&lon=${evt.latlng.lng}&appid=${API_KEY}`
+//     const API_URL = `https://api.openweathermap.org/geo/1.0/reverse?lat=${evt.latlng.lat}&lon=${evt.latlng.lng}&limit=1&appid=${API_KEY}`;
+//     try{
+
+//         const data = await fetch(API_URL);
+//         const data2 = await fetch(WEATHER_API_URL);
         
-        const contentData2 = await data2.json();
-        const contentData = await data.json();
-        const temp_C =  (contentData2.list[0].main.temp - 273.15).toFixed(2);
-        popup
-        .setLatLng(evt.latlng)
-        .setContent(`${contentData[0].name},  \n ${temp_C}°C `.toUpperCase())
-        .openOn(map);
-    }
-    catch{
-        console.error("BAD REQUEST: 400");
-    }
-}
+//         const contentData2 = await data2.json();
+//         const contentData = await data.json();
+//         const temp_C =  (contentData2.list[0].main.temp - 273.15).toFixed(2);
+//         popup
+//         .setLatLng(evt.latlng)
+//         .setContent(`${contentData[0].name},  \n ${temp_C}°C `.toUpperCase())
+//         .openOn(map);
+//     }
+//     catch{
+//         console.error("BAD REQUEST: 400");
+//     }
+// }

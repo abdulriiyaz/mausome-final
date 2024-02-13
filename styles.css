@@ -59,7 +59,7 @@ h1 {
   border-radius: 4px;
   font-size: 1rem;
   color: #fff;
-  background: rgb(5 150 105);
+  /* background: rgb(5 150 105); */
 }
 .weather-input .search-btn:hover {
   background: rgb(5 150 105); 
@@ -199,4 +199,9 @@ background: rgb(5 150 105);
 .dark{
   background-color: #1e1e1e !important;
   color: white !important;
+}
+
+.search-color{
+  background-color: white !important;
+  color: black !important;
 }

@@ -8,12 +8,7 @@
     <link rel="icon" href="./images/weather.ico" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-    crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-    crossorigin=""></script>
+    
   </head>
   <body class=" min-h-screen min-w-screen bg-emerald-900 !grid !place-content-center">
     <h1 class="!text-3xl !uppercase ">Mausome</h1>
@@ -28,7 +23,7 @@
       <div class="weather-input">
         <h3 class="text-white !uppercase">City...</h3>
         <input class="city-input !focus:border-2 !focus:border-emrald-600 !rounded-full !uppercase" type="text" placeholder="E.g., New York, London, Tokyo">
-        <button class="search-btn !rounded-full !uppercase !bg-emerald-600">Search</button>
+        <button class="search-btn !rounded-full !uppercase bg-emerald-600">Search</button>
         <div class="separator !bg-emerald-600 !rounded-full"></div>
         <button class="location-btn !rounded-full">Use Current Location</button>
       </div>
@@ -48,7 +43,7 @@
           </ul>
         </div>
       </div>
-        <div id="map" class="w-full h-full rounded-xl"></div>
+        <v id="map" class="w-full h-full rounded-xl"></v>
     </div>
     <script type="module" src="script.js" defer></script>
   </body>
