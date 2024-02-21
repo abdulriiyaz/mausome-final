@@ -194,21 +194,21 @@ setTimeout(()=>{
     loader.addClass('!hidden');
     // WORK FROM HERE
 
-    // map = L.map('map').setView([lat, long], 13);
-    //     var circle = L.circle([lat, long], {
-    //     color: '#064E3B',
-    //     fillColor: '#064E3B',
-    //     fillOpacity: 0.9,
-    //     radius: 900
-    //     }).addTo(map);
-    //     window.localStorage.setItem("Location", city_name);
-    //     window.localStorage.setItem("Temp", city_temp);
-    //     circle.bindPopup(`You're in ${window.localStorage.getItem("Location")}, Temp: ${window.localStorage.getItem("Temp")}°C`).openPopup();
-    //     map.on('click', onMapClick);
-    //     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    //     maxZoom: 19,
-    //     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    //     }).addTo(map);
+     map = L.map('map').setView([lat, long], 13);
+        var circle = L.circle([lat, long], {
+        color: '#064E3B',
+        fillColor: '#064E3B',
+        fillOpacity: 0.9,
+        radius: 900
+        }).addTo(map);
+        window.localStorage.setItem("Location", city_name);
+        window.localStorage.setItem("Temp", city_temp);
+        circle.bindPopup(`You're in ${window.localStorage.getItem("Location")}, Temp: ${window.localStorage.getItem("Temp")}°C`).openPopup();
+        map.on('click', onMapClick);
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
     
 }, 1000);
 // const onMapClick = async (evt) => {
